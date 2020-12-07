@@ -66,6 +66,7 @@ public class Item {
     public String getThumbnailUrl() {
         return thumbnailUrl;
     }
+
     public String getBroadcasterName() {
         return broadcasterName;
     }
