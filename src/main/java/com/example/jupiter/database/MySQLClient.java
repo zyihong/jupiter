@@ -206,7 +206,7 @@ public class MySQLClient {
                 ResultSet rs = statement.executeQuery();
 
                 if (rs.next()) {
-                    name = rs.getString("first_name") + rs.getString("last_name");
+                    name = rs.getString("first_name") + " " + rs.getString("last_name");
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("user_id", body.getUsrId());
             session.setAttribute("user_name", usrName);
-            session.setMaxInactiveInterval(60);
+            session.setMaxInactiveInterval(600);
 
             LoginResponseBody loginResponseBody = new LoginResponseBody(body.getUsrId(), usrName);
             response.setContentType("application/json;charset=UTF-8");
