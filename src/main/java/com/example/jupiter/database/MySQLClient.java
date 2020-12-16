@@ -2,6 +2,7 @@ package com.example.jupiter.database;
 
 import com.example.jupiter.entity.Item;
 import com.example.jupiter.entity.ItemType;
+import com.example.jupiter.entity.User;
 
 import java.sql.*;
 import java.util.*;
@@ -185,6 +186,55 @@ public class MySQLClient {
             }
 
             return games;
+        }
+        else {
+            throw new MySQLException("No database connection!");
+        }
+    }
+
+    // Return name is success else NULL.
+    public String verifyUser(String usrId, String password) throws MySQLException {
+        if (conn != null) {
+            String name = null;
+
+            String query = "SELECT first_name, last_name FROM users WHERE id = ? AND password = ?";
+
+            try {
+                PreparedStatement statement = conn.prepareStatement(query);
+                statement.setString(1, usrId);
+                statement.setString(2, password);
+                ResultSet rs = statement.executeQuery();
+
+                if (rs.next()) {
+                    name = rs.getString("first_name") + rs.getString("last_name");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new MySQLException("Failed to verify a user");
+            }
+
+            return name;
+        }
+        else {
+            throw new MySQLException("No database connection!");
+        }
+    }
+
+    public boolean register(User user) throws MySQLException {
+        if (conn != null) {
+            String query = "INSERT IGNORE INTO users VALUES (?, ?, ?, ?)";
+
+            try {
+                PreparedStatement statement = conn.prepareStatement(query);
+                statement.setString(1, user.getUsrId());
+                statement.setString(2, user.getPassword());
+                statement.setString(3, user.getFirstName());
+                statement.setString(4, user.getLastName());
+                return statement.executeUpdate() == 1;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new MySQLException("Failed to register a new user");
+            }
         }
         else {
             throw new MySQLException("No database connection!");
