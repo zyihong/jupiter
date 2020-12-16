@@ -102,7 +102,7 @@ public class Item {
         private String thumbnailUrl;
 
         @JsonProperty("broadcaster_name")
-        @JsonAlias({ "user_name" }) // can be retrieved by "user_name"
+        @JsonAlias({ "user_name" }) // Can be retrieved by "user_name".
         private String broadcasterName;
 
         @JsonProperty("url")

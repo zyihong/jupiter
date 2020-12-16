@@ -104,7 +104,7 @@ public class TwitchClient {
     }
 
     private List<Item> getItemList(String data) throws TwitchException {
-        // convert json string to object array
+        // Convert json string to object array.
         ObjectMapper mapper = new ObjectMapper();
 
         try {
@@ -137,10 +137,10 @@ public class TwitchClient {
         List<Item> streamList = getItemList(queryTwitch(url));
 
         for (Item item : streamList) {
-            // ItemType skipped when deserialize (Custom field)
+            // ItemType skipped when deserialize (Custom field).
             item.setType(ItemType.STREAM);
 
-            // Stream type does not contains url, so we build it
+            // Stream type does not contains url, so we build it.
             item.setUrl(TWITCH_BASE_URL + item.getBroadcasterName());
         }
 
@@ -152,10 +152,10 @@ public class TwitchClient {
         List<Item> videoList = getItemList(queryTwitch(url));
 
         for (Item item : videoList) {
-            // ItemType skipped when deserialize (Custom field)
+            // ItemType skipped when deserialize (Custom field).
             item.setType(ItemType.VIDEO);
 
-            // Video type does not contains game id, so we set it
+            // Video type does not contains game id, so we set it.
             item.setGameId(gameId);
         }
 
@@ -167,7 +167,7 @@ public class TwitchClient {
         List<Item> clipList = getItemList(queryTwitch(url));
 
         for (Item item : clipList) {
-            // ItemType skipped when deserialize (Custom field)
+            // ItemType skipped when deserialize (Custom field).
             item.setType(ItemType.CLIP);
         }
 

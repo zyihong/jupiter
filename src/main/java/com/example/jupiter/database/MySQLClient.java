@@ -11,10 +11,10 @@ public class MySQLClient {
 
     public MySQLClient() throws MySQLException {
         try {
-            // prevent corner case
+            // Prevent corner case.
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            // Connect to MySQL
+            // Connect to MySQL.
             conn = DriverManager.getConnection(MySQLDBUtil.getMySQLAddress());
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,7 +60,7 @@ public class MySQLClient {
         if (conn != null) {
             String insertSql = "INSERT IGNORE INTO favorite (user_id, item_id) VALUES (?, ?)";
 
-            // make sure item exist in the database before update favorite
+            // Make sure item exist in the database before update favorite.
             addItem(item);
             try {
                 PreparedStatement stmt = conn.prepareStatement(insertSql);
