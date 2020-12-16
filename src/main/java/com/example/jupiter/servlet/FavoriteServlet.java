@@ -45,8 +45,7 @@ public class FavoriteServlet extends HttpServlet {
         try {
             client = new MySQLClient();
             itemMap = client.getFavoriteItems(userId);
-            response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().print(new ObjectMapper().writeValueAsString(itemMap));
+            Util.writeItemMap(response, itemMap);
         } catch (MySQLException e) {
             throw new ServletException(e);
         } finally {
