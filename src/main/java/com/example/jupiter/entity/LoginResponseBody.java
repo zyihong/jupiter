@@ -7,16 +7,16 @@ public class LoginResponseBody {
     @JsonProperty("user_id")
     private final String usrId;
 
-    @JsonProperty("password")
-    private final String password;
+    @JsonProperty("name")
+    private final String name;
 
     @JsonCreator
-    public LoginResponseBody(String usrId, String password) {
+    public LoginResponseBody(String usrId, String name) {
         this.usrId = usrId;
-        this.password = password;
+        this.name = name;
     }
 
     public String getUsrId() {return this.usrId;}
 
-    public String getPassword() {return this.password;}
+    public String getName() {return this.name;}
 }
