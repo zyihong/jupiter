@@ -19,43 +19,43 @@ const renderCardTitle = (item, loggedIn) => {
     const title = `${item.broadcaster_name} - ${item.title}`;
    
     return (
-      <>
-        {
-          loggedIn &&
-          <Tooltip title="Add to favorite list">
-            <Button shape="circle" icon={<StarOutlined />} />
-          </Tooltip>
-        }
-        <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', width: 450 }}>
-          <Tooltip title={title}>
-            <span>{title}</span>
-          </Tooltip>
-        </div>
-      </>
+        <>
+            {
+                loggedIn &&
+                <Tooltip title="Add to favorite list">
+                    <Button shape="circle" icon={<StarOutlined />} />
+                </Tooltip>
+            }
+            <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', width: 450 }}>
+            <Tooltip title={title}>
+                <span>{title}</span>
+            </Tooltip>
+            </div>
+        </>
     )
 }
 
 const renderCardGrid = (data, loggedIn) => {
     return (
-      <List
-        grid={{
-          xs: 1,
-          sm: 2,
-          md: 4,
-          lg: 4,
-          xl: 6,
-        }}
-        dataSource={data}
-        renderItem={item => (
-          <List.Item style={{ marginRight: '20px' }}>
-            <Card title={renderCardTitle(item, loggedIn)}>
-              <a href={item.url} target="_blank" rel="noopener noreferrer">
-                <img alt="Placeholder" src={processUrl(item.thumbnail_url)}/>
-              </a>
-            </Card>
-          </List.Item>
-        )}
-      />
+        <List
+            grid={{
+                xs: 1,
+                sm: 2,
+                md: 4,
+                lg: 4,
+                xl: 6,
+            }}
+            dataSource={data}
+            renderItem={item => (
+                <List.Item style={{ marginRight: '20px' }}>
+                    <Card title={renderCardTitle(item, loggedIn)}>
+                    <a href={item.url} target="_blank" rel="noopener noreferrer">
+                        <img alt="Placeholder" src={processUrl(item.thumbnail_url)}/>
+                    </a>
+                    </Card>
+                </List.Item>
+            )}
+        />
     )
 }
    
@@ -77,7 +77,7 @@ const Home = ({ resources, loggedIn }) => {
             </TabPane>
         </Tabs>
     );
-  }
+}
    
-  export default Home;
+export default Home;
   

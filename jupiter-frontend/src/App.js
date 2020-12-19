@@ -2,10 +2,11 @@ import React from 'react';
 import {Layout, Button, message, Menu, Col, Row} from 'antd';
 import Login from './components/Login';
 import Register from './components/Register';
-import {logout, getTopGames} from './utils';
+import {logout, getTopGames, getRecommendations, searchGameById} from './utils';
 import CustomSearch from './components/CustomSearch';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import Favorites from './components/Favorites';
+import Home from './components/Home';
 import { LikeOutlined, FireOutlined } from '@ant-design/icons';
  
 const {Header, Content, Sider} = Layout;
@@ -14,6 +15,37 @@ class App extends React.Component {
   state = {
     loggedIn: false,
     topGames: [],
+    resources: {
+      VIDEO: [],
+      STREAM: [],
+      CLIP: [],
+    },
+  }
+
+   
+  onGameSelect = ({ key }) => {
+    if (key === 'Recommendation') {
+      getRecommendations().then((data) => {
+        this.setState({
+          resources: data,
+        })
+      })
+ 
+      return;
+    }
+ 
+    searchGameById(key).then((data) => {
+      this.setState({
+        resources: data,
+      })
+    })
+  }
+
+
+  customSearchOnSuccess = (data) => {
+    this.setState({
+      resources: data,
+    })
   }
 
   signoutOnClick = () => {
@@ -71,8 +103,10 @@ class App extends React.Component {
       </Header>
       <Layout>
         <Sider width={300} className="site-layout-background">
-          <CustomSearch />
-          <Menu mode="inline" onSelect={() => {}} style={{ marginTop: '10px' }}>
+
+          <CustomSearch onSuccess={this.customSearchOnSuccess}/>
+
+          <Menu mode="inline" onSelect={this.onGameSelect} style={{ marginTop: '10px' }}>
             <Menu.Item icon={<LikeOutlined />} key="Recommendation">Recommend for you!</Menu.Item>
 
             <SubMenu icon={<FireOutlined />} key="Popular Games" title="Popular Games" className="site-top-game-list" >
@@ -102,7 +136,7 @@ class App extends React.Component {
               overflow: 'auto'
             }}
           >
-            {'Home'} 
+            <Home resources={this.state.resources} loggedIn={this.state.loggedIn} />
           </Content>
         </Layout>
       </Layout>

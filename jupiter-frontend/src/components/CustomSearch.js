@@ -21,7 +21,12 @@ class CustomSearch extends React.Component {
     onSubmit = (data) => {
         searchGameByName(data.game_name)
         .then((data) => {
-            console.log(data);
+            this.setState({
+                displayModal: false,
+            })
+            // console.log(data);
+            this.props.onSuccess(data);
+
         }).catch((e) => {
             message.error(e.message);
         })
@@ -40,7 +45,7 @@ class CustomSearch extends React.Component {
                 </Button>
 
                 <Modal 
-                    title="Custom Search" visible={this.state.displayModal} 
+                    title="Search" visible={this.state.displayModal} 
                     onCancel={this.handelCancel} footer={null}
                 >
                     <Form name="custom_search" onFinish={this.onSubmit}>
