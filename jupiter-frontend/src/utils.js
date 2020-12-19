@@ -32,3 +32,15 @@ export const register = (data) => {
         }
     })
 }
+
+const logoutUrl = `${SERVER_ORIGIN}/logout`;
+export const logout = () => {
+    return fetch(registerUrl, {
+        method: 'POST',
+        credentials: 'include',
+    }).then((response) => {
+        if (response.status !== 200) {
+            throw Error('Fail to logout!');
+        }
+    })
+}
