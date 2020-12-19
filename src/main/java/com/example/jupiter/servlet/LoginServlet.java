@@ -30,6 +30,8 @@ public class LoginServlet extends HttpServlet {
         try {
             client = new MySQLClient();
             String usrId = body.getUsrId();
+//            System.out.println("Login: usr_id = " + usrId);
+//            System.out.println("Login: password = " + body.getPassword());
             String password = Util.encryptPassword(usrId, body.getPassword());
             usrName = client.verifyUser(usrId, password);
         } catch (MySQLException e) {

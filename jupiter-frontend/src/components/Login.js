@@ -45,7 +45,7 @@ class Login extends React.Component {
                         </Form.Item>
 
                         <Form.Item name="password" rules={[{required: true, message: 'Password is required!'}]}>
-                            <Input prefix={<LockOutlined/>} placeholder="password"/>
+                            <Input.Password prefix={<LockOutlined/>} placeholder="password"/>
                         </Form.Item> 
 
                         <Form.Item>
