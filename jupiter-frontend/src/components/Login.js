@@ -39,7 +39,7 @@ class Login extends React.Component {
                     title="Log in" visible={this.state.displayModal} 
                     onCancel={this.handelCancel} footer={null} destroyOnClose={true}
                 >
-                    <Form name="normal_login" onFinish={this.handleFinish} preserve={false}>
+                    <Form name="" onFinish={this.handleFinish} preserve={false}>
                         <Form.Item name="user_id" rules={[{required: true, message: 'Username is required!'}]}>
                             <Input prefix={<UserOutlined/>} placeholder="username"/>
                         </Form.Item>

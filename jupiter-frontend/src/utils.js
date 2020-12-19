@@ -1,4 +1,4 @@
-const SERVER_ORIGIN = '';
+const SERVER_ORIGIN = '/jupiter';
 
 const loginUrl = `${SERVER_ORIGIN}/login`;
 export const login = (credential) => {
@@ -35,7 +35,7 @@ export const register = (data) => {
 
 const logoutUrl = `${SERVER_ORIGIN}/logout`;
 export const logout = () => {
-    return fetch(registerUrl, {
+    return fetch(logoutUrl, {
         method: 'POST',
         credentials: 'include',
     }).then((response) => {
@@ -96,22 +96,6 @@ export const addFavoriteItem = (favItem) => {
         },
         credentials: 'include',
         body: JSON.stringify({ favorite: favItem })
-    }).then((response) => {
-        if (response.status !== 200) {
-        throw Error('Fail to add favorite item');
-        }
-    })
-}
-
-const favoriteItemUrl = `${SERVER_ORIGIN}/favorite`;
-export const addFavoriteItem = (item) => {
-    return fetch(favoriteItemUrl, {
-        method: 'POST',
-        headers: {
-        'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({ favorite: item })
     }).then((response) => {
         if (response.status !== 200) {
         throw Error('Fail to add favorite item');
