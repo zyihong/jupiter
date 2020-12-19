@@ -1,7 +1,6 @@
 import React from 'react';
 import { Menu, Button, Drawer } from 'antd';
 import { EyeOutlined, YoutubeOutlined, VideoCameraOutlined, StarFilled } from '@ant-design/icons';
-import { searchGameById } from '../utils';
 
 const { SubMenu } = Menu;
 const MenuKey = {

@@ -161,7 +161,7 @@ class App extends React.Component {
               resources={this.state.resources} 
               loggedIn={this.state.loggedIn} 
               favoriteItems={this.state.favoriteItems} 
-              favoriteOnChange={this.favoriteOnChange}
+              favOnChange={this.favoriteOnChange}
             />
           </Content>
         </Layout>
