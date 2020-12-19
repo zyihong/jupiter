@@ -1,6 +1,7 @@
 import React from 'react';
 import {Layout, Button, message} from 'antd';
 import Login from './components/Login';
+import Register from './components/Register';
 import {logout} from './utils';
  
 const {Header, Content, Sider} = Layout;
@@ -37,6 +38,7 @@ class App extends React.Component {
           (
             <>
               <Login onSuccess={this.signinOnSuccess} />
+              <Register />
             </>
           )
         }
