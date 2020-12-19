@@ -44,3 +44,92 @@ export const logout = () => {
         }
     })
 }
+
+const topGamesUrl = `${SERVER_ORIGIN}/game`;
+export const getTopGames = () => {
+    return fetch(topGamesUrl).then((response) => {
+        if (response.status !== 200) {
+        throw Error('Fail to get top games');
+        }
+    
+        return response.json();
+    })
+}
+
+const getGameDetailsUrl = `${SERVER_ORIGIN}/game?game_name=`;
+const getGameDetails = (gameName) => {
+    return fetch(`${getGameDetailsUrl}${gameName}`).then((response) => {
+        if (response.status !== 200) {
+        throw Error('Fail to find the game');
+        }
+    
+        return response.json();
+    });
+}
+
+const searchGameByIdUrl = `${SERVER_ORIGIN}/search?game_id=`;
+export const searchGameById = (gameId) => {
+    return fetch(`${searchGameByIdUrl}${gameId}`).then((response) => {
+        if (response.status !== 200) {
+        throw Error('Fail to find the game');
+        }
+        return response.json();
+    })
+}
+
+export const searchGameByName = (gameName) => {
+    return getGameDetails(gameName).then((data) => {
+        if (data && data.id) {
+            return searchGameById(data.id);
+        }
+    
+        throw Error('Fail to find the game')
+    })
+}
+
+const favoriteItemUrl = `${SERVER_ORIGIN}/favorite`; 
+export const addFavoriteItem = (favItem) => {
+    return fetch(favoriteItemUrl, {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ favorite: favItem })
+    }).then((response) => {
+        if (response.status !== 200) {
+        throw Error('Fail to add favorite item');
+        }
+    })
+}
+
+const favoriteItemUrl = `${SERVER_ORIGIN}/favorite`;
+export const addFavoriteItem = (item) => {
+    return fetch(favoriteItemUrl, {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ favorite: item })
+    }).then((response) => {
+        if (response.status !== 200) {
+        throw Error('Fail to add favorite item');
+        }
+    })
+}
+
+export const deleteFavoriteItem = (item) => {
+    return fetch(favoriteItemUrl, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ favorite: item })
+    }).then((response) => {
+        if (response.status !== 200) {
+            throw Error('Fail to delete favorite item');
+        }
+    })
+}
