@@ -1,7 +1,7 @@
 import React from 'react';
-import { Menu, Button, Drawer, message } from 'antd';
+import { Menu, Button, Drawer } from 'antd';
 import { EyeOutlined, YoutubeOutlined, VideoCameraOutlined, StarFilled } from '@ant-design/icons';
-import { getFavoriteItem } from '../utils';
+import { searchGameById } from '../utils';
 
 const { SubMenu } = Menu;
 const MenuKey = {
@@ -13,21 +13,11 @@ const MenuKey = {
 class Favorites extends React.Component {
     state = {
         displayDrawer: false,
-        data: {
-            VIDEO: [],
-            STREAM: [],
-            CLIP: [],
-        }
     }
 
     onFavoriteClick = () => {
-        getFavoriteItem().then((data) => {
-            this.setState({
-                displayDrawer: true,
-                data,
-            })
-        }).catch((e) => {
-            message.error(e.message);
+        this.setState({
+            displayDrawer: true,
         })
     }
 
@@ -38,7 +28,7 @@ class Favorites extends React.Component {
     }
 
     render = () => {
-        const {VIDEO, STREAM, CLIP} = this.state.data;
+        const {VIDEO, STREAM, CLIP} = this.props.data;
 
         return (
             <>
@@ -62,13 +52,13 @@ class Favorites extends React.Component {
                         <SubMenu key={MenuKey.Streams} icon={<EyeOutlined />} title="Streams">
                         {
                             STREAM.map((item) => {
-                            return (
-                                <Menu.Item key={item.id}>
-                                <a href={item.url} target="_blank" rel="noopener noreferrer">
-                                    {`${item.broadcaster_name} - ${item.title}`}
-                                </a>
-                                </Menu.Item>
-                            )
+                                return (
+                                    <Menu.Item key={item.id}>
+                                    <a href={item.url} target="_blank" rel="noopener noreferrer">
+                                        {`${item.broadcaster_name} - ${item.title}`}
+                                    </a>
+                                    </Menu.Item>
+                                )
                             })
                         }
                         </SubMenu>
@@ -76,13 +66,13 @@ class Favorites extends React.Component {
                         <SubMenu key={MenuKey.Videos} icon={<YoutubeOutlined />} title="Videos">
                         {
                             VIDEO.map((item) => {
-                            return (
-                                <Menu.Item key={item.id}>
-                                <a href={item.url} target="_blank" rel="noopener noreferrer">
-                                    {`${item.broadcaster_name} - ${item.title}`}
-                                </a>
-                                </Menu.Item>
-                            )
+                                return (
+                                    <Menu.Item key={item.id}>
+                                    <a href={item.url} target="_blank" rel="noopener noreferrer">
+                                        {`${item.broadcaster_name} - ${item.title}`}
+                                    </a>
+                                    </Menu.Item>
+                                )
                             })
                         }
                         </SubMenu>
@@ -90,13 +80,13 @@ class Favorites extends React.Component {
                         <SubMenu key={MenuKey.Clips} icon={<VideoCameraOutlined />} title="Clips">
                         {
                             CLIP.map((item) => {
-                            return (
-                                <Menu.Item key={item.id}>
-                                <a href={item.url} target="_blank" rel="noopener noreferrer">
-                                    {`${item.broadcaster_name} - ${item.title}`}
-                                </a>
-                                </Menu.Item>
-                            )
+                                return (
+                                    <Menu.Item key={item.id}>
+                                    <a href={item.url} target="_blank" rel="noopener noreferrer">
+                                        {`${item.broadcaster_name} - ${item.title}`}
+                                    </a>
+                                    </Menu.Item>
+                                )
                             })
                         }
                         </SubMenu>
