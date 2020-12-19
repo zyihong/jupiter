@@ -38,7 +38,7 @@ class Favorites extends React.Component {
     }
 
     render = () => {
-        const {video, stream, clip} = this.state.data;
+        const {VIDEO, STREAM, CLIP} = this.state.data;
 
         return (
             <>

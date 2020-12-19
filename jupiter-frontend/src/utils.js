@@ -49,7 +49,7 @@ const topGamesUrl = `${SERVER_ORIGIN}/game`;
 export const getTopGames = () => {
     return fetch(topGamesUrl).then((response) => {
         if (response.status !== 200) {
-        throw Error('Fail to get top games');
+            throw Error('Fail to get top games');
         }
     
         return response.json();
@@ -60,7 +60,7 @@ const getGameDetailsUrl = `${SERVER_ORIGIN}/game?game_name=`;
 const getGameDetails = (gameName) => {
     return fetch(`${getGameDetailsUrl}${gameName}`).then((response) => {
         if (response.status !== 200) {
-        throw Error('Fail to find the game');
+            throw Error('Fail to find the game');
         }
     
         return response.json();
@@ -71,7 +71,7 @@ const searchGameByIdUrl = `${SERVER_ORIGIN}/search?game_id=`;
 export const searchGameById = (gameId) => {
     return fetch(`${searchGameByIdUrl}${gameId}`).then((response) => {
         if (response.status !== 200) {
-        throw Error('Fail to find the game');
+            throw Error('Fail to find the game');
         }
         return response.json();
     })

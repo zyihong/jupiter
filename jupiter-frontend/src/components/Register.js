@@ -21,13 +21,12 @@ class Register extends React.Component {
     }
 
     handleFinish = (data) => {
-        register(data).then((data) => {
+        register(data).then(() => {
             this.setState({
                 displayModal: false,
             })
 
-            message.success(`${data.name}, welcome back to Jupiter!`);
-            this.props.onSuccess();
+            message.success(`Successfully signed up!`)
         }).catch((e) => {
             message.error(e.message);
         })

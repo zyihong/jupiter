@@ -1,16 +1,19 @@
 import React from 'react';
-import {Layout, Button, message} from 'antd';
+import {Layout, Button, message, Menu, Col, Row} from 'antd';
 import Login from './components/Login';
 import Register from './components/Register';
-import {logout} from './utils';
-import Column from 'antd/lib/table/Column';
+import {logout, getTopGames} from './utils';
+import CustomSearch from './components/CustomSearch';
+import SubMenu from 'antd/lib/menu/SubMenu';
 import Favorites from './components/Favorites';
+import { LikeOutlined, FireOutlined } from '@ant-design/icons';
  
 const {Header, Content, Sider} = Layout;
  
 class App extends React.Component {
   state = {
-    loggedIn: false
+    loggedIn: false,
+    topGames: [],
   }
 
   signoutOnClick = () => {
@@ -31,6 +34,17 @@ class App extends React.Component {
     })
   }
 
+  componentDidMount = () => {
+    // console.log("fetch top games")
+    getTopGames().then((data) => {
+      this.setState({
+        topGames: data
+      })
+    }).catch((e) => {
+      message.error(e.message);
+    })
+  }
+
   render = () => (
     <Layout>
       <Header>
@@ -40,7 +54,7 @@ class App extends React.Component {
               this.state.loggedIn && <Favorites />
             }
           </Col>
-          
+
           <Col>
             {
               this.state.loggedIn ? 
@@ -57,7 +71,26 @@ class App extends React.Component {
       </Header>
       <Layout>
         <Sider width={300} className="site-layout-background">
-          {'Sider'}
+          <CustomSearch />
+          <Menu mode="inline" onSelect={() => {}} style={{ marginTop: '10px' }}>
+            <Menu.Item icon={<LikeOutlined />} key="Recommendation">Recommend for you!</Menu.Item>
+
+            <SubMenu icon={<FireOutlined />} key="Popular Games" title="Popular Games" className="site-top-game-list" >
+              {
+                this.state.topGames.map((game) => {
+                  return (
+                    <Menu.Item key={game.id} style={{height : '50px'}}>
+                      <img 
+                        alt="Placeholder" 
+                        src={game.box_art_url.replace('{height}', '40').replace('{width}', '40')}
+                        style={{borderRadius: '50%', marginRight: '20px'}}/> 
+                      <span>{game.name}</span>
+                    </Menu.Item>
+                  )
+                })
+              }
+            </SubMenu>
+          </Menu>
         </Sider>
         <Layout style={{ padding: '24px' }}>
           <Content
