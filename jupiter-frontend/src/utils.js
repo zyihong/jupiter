@@ -133,3 +133,29 @@ export const deleteFavoriteItem = (item) => {
         }
     })
 }
+
+export const getFavoriteItem = () => {
+    return fetch(favoriteItemUrl, {
+        credentials: 'include',
+    }).then((response) => {
+        if (response.status !== 200) {
+            throw Error('Fail to get favorite item');
+        }
+    
+        return response.json();
+    })
+}
+   
+const getRecommendedItemsUrl = `${SERVER_ORIGIN}/recommendation`;   
+export const getRecommendations = () => {
+    return fetch(getRecommendedItemsUrl, {
+        credentials: 'include',
+    }).then((response) => {
+        if (response.status !== 200) {
+            throw Error('Fail to get recommended item');
+        }
+    
+        return response.json();
+    })
+}
+  
