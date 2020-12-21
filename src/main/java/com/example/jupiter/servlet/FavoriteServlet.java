@@ -26,9 +26,7 @@ public class FavoriteServlet extends HttpServlet {
 
         String userId = (String) session.getAttribute("user_id");
 
-//        String userId = request.getParameter("user_id");
-        ObjectMapper mapper = new ObjectMapper();
-        Favorite body = mapper.readValue(request.getReader(), Favorite.class);
+        Favorite body = Util.readRequestBody(Favorite.class, request);
         if (body == null) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
@@ -80,9 +78,7 @@ public class FavoriteServlet extends HttpServlet {
 
         String userId = (String) session.getAttribute("user_id");
 
-//        String userId = request.getParameter("user_id");
-        ObjectMapper mapper = new ObjectMapper();
-        Favorite body = mapper.readValue(request.getReader(), Favorite.class);
+        Favorite body = Util.readRequestBody(Favorite.class, request);
         if (body == null) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;

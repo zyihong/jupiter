@@ -1,6 +1,7 @@
 package com.example.jupiter.servlet;
 
 import com.example.jupiter.entity.Item;
+import com.example.jupiter.entity.LoginRequestBody;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -18,5 +19,11 @@ public class Util {
 
     public static String encryptPassword(String usrId, String password) throws IOException {
         return DigestUtils.md5Hex(usrId + DigestUtils.md5Hex(password)).toLowerCase();
+    }
+
+    public static <T> T readRequestBody(Class<T> c1, HttpServletRequest request) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        return mapper.readValue(request.getReader(), c1);
     }
 }
