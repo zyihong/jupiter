@@ -174,7 +174,7 @@ public class TwitchClient {
         return clipList;
     }
 
-    private List<Item> searchByTypes(String gameId, ItemType type, int limit)
+    public List<Item> searchByTypes(String gameId, ItemType type, int limit)
             throws TwitchException {
         List<Item> itemList = Collections.emptyList();
 
