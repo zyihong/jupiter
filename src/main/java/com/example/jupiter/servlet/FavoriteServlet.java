@@ -53,7 +53,6 @@ public class FavoriteServlet extends HttpServlet {
         }
 
         String userId = (String) session.getAttribute("user_id");
-//        String userId = request.getParameter("user_id");
         Map<String, List<Item>> itemMap;
         MySQLClient client = null;
         try {
