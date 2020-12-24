@@ -3,7 +3,7 @@
 ### Overview of Jupiter Application
 
 Jupiter is a Personalized Twitch Resources Recommendation Engine. It allows user to create account, 
-search Twich resources including video, stream and clip. Users can also login and add resources to "Favorite".
+search Twitch resources including video, stream and clip. Users can also login and add resources to "Favorite".
  The application provides recommendation based on user's favorite games or the top games if no favorite.
  The recommendation uses Content-Based algorithm.
  
