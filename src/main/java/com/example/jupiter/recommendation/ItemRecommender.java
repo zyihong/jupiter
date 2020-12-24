@@ -1,14 +1,13 @@
 package com.example.jupiter.recommendation;
 
+import com.example.jupiter.database.MySQLClient;
+import com.example.jupiter.database.MySQLException;
 import com.example.jupiter.entity.Item;
 import com.example.jupiter.entity.Game;
 import com.example.jupiter.entity.ItemType;
 import com.example.jupiter.twitch.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -18,7 +17,7 @@ public class ItemRecommender {
     private static final int DEFAULT_PER_GAME_RECOMMENDATION_LIMIT = 10;
     private static final int DEFAULT_TOTAL_RECOMMENDATION_LIMIT = 20;
 
-    // If user does not logged in OR the user does not favorite certain type, use this API.
+    // If user does not logged in OR the user does not favorite certain type, use this method.
     // Just get the resource for the top games.
     private List<Item> recommendByTopGames(ItemType type, List<Game> topGames) throws RecommendationException {
         List<Item> recommendedItems = new ArrayList<>();
@@ -43,7 +42,7 @@ public class ItemRecommender {
         return recommendedItems;
     }
 
-    // if user logged in and has favorited some resource, use this API.
+    // if user logged in and has favorited some resource, use this method.
     private List<Item> recommendByFavorite(ItemType type, Set<String> favoriteItemIds,
                                            List<String> favoriteGameIds) throws RecommendationException {
         List<Item> recommendedItems = new ArrayList<>();
@@ -82,4 +81,64 @@ public class ItemRecommender {
         }
         return recommendedItems;
     }
+
+    public Map<String, List<Item>> recommendItemsByDefault() throws RecommendationException {
+        Map<String, List<Item>> recommendedItemMap = new HashMap<>();
+        TwitchClient client = new TwitchClient();
+        List<Game> topGames;
+        try {
+            topGames = client.getTopGames(DEFAULT_GAME_LIMIT);
+        } catch (TwitchException e) {
+            throw new RecommendationException("Fail to get top games for recommendations!");
+        }
+
+        for (ItemType type : ItemType.values()) {
+            recommendedItemMap.put(type.toString(), recommendByTopGames(type, topGames));
+        }
+
+        return recommendedItemMap;
+    }
+
+    public Map<String, List<Item>> recommendItemsByUser(String userId) throws RecommendationException {
+        Map<String, List<Item>> recommendedItemMap = new HashMap<>();
+        Set<String> favoriteItemIds;
+        Map<String, List<String>> favoriteGameIds;
+
+        MySQLClient connection = null;
+
+        try {
+            connection = new MySQLClient();
+            favoriteItemIds = connection.getFavoriteItemIds(userId);
+            favoriteGameIds = connection.getFavoriteGameIds(favoriteItemIds);
+        } catch (MySQLException e) {
+            throw new RecommendationException("Fail to get favorite game ids from database for recommendation!");
+        } finally {
+            connection.close();
+        }
+
+        for (Map.Entry<String, List<String>> entry : favoriteGameIds.entrySet()) {
+            if (entry.getValue().size() == 0) {
+                TwitchClient client = new TwitchClient();
+                List<Game> topGames;
+
+                try {
+                    topGames = client.getTopGames(DEFAULT_GAME_LIMIT);
+                } catch (TwitchException e) {
+                    throw new RecommendationException("Fail to get top games for recommendations!");
+                }
+
+                recommendedItemMap.put(entry.getKey(), recommendByTopGames(ItemType.valueOf(entry.getKey()), topGames));
+            }
+            else {
+                recommendedItemMap.put(
+                        entry.getKey(),
+                        recommendByFavorite(ItemType.valueOf(entry.getKey()), favoriteItemIds, entry.getValue())
+                );
+            }
+        }
+
+        return recommendedItemMap;
+    }
+
+
 }
