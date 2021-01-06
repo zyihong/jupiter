@@ -9,5 +9,5 @@ search Twitch resources including video, stream and clip. Users can also login a
  
 ### The deployed application
 
-Visit the Jupiter Application at [http://18.206.209.109:80](http://18.206.209.109:80) and explore it.
+Visit the Jupiter Application at [http://18.206.209.109/](http://18.206.209.109/) and explore it.
 ![diagram](screenshot.png)
